@@ -43,16 +43,6 @@ class User(Base):
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
 
-with Session(engine) as session:
-    mikey = User(
-        first_name="Mikey",
-        last_name="Gain",
-        email="gainmikey@gmail.com",
-    )
-
-    session.add(mikey)
-    session.commit()
-
 def get_db():
     db = session_local()
     try:
