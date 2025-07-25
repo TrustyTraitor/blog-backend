@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, ForeignKey, String, BLOB
-from sqlalchemy.orm import sessionmaker, Mapped, mapped_column, DeclarativeBase, relationship, Session
+from sqlalchemy.orm import sessionmaker, Mapped, mapped_column, DeclarativeBase, relationship
 
 from typing import List
 
@@ -24,8 +24,6 @@ class Post(Base):
 
     comments: Mapped[List["Comment"]] = relationship(back_populates="post", cascade="all, delete-orphan")
 
-
-
 class Comment(Base):
     __tablename__ = 'comment'
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -45,16 +43,19 @@ class User(Base):
     username: Mapped[str] = mapped_column(String(32))
     bio: Mapped[str|None] = mapped_column(String(128))
     email: Mapped[str]
+
     password_hash: Mapped[str] = mapped_column(String(256))
     salt: Mapped[str] = mapped_column(String(32))
+
 
     comments: Mapped[List["Comment"]] = relationship(back_populates="user", cascade="all, delete-orphan")
     posts: Mapped[List["Post"]] = relationship(back_populates="user", cascade="all, delete-orphan")
 
+# TODO: Need to add user roles/permissions.
+
 
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
-
 
 def get_db():
     db = session_local()

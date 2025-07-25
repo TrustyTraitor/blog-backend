@@ -3,26 +3,27 @@ from pydantic import BaseModel
 class User(BaseModel):
     id: int
     username: str
+    bio: str
 
-class BlogHeadline(BaseModel):
+class PostHeadLine(BaseModel):
     id: int
     title: str
     date: int
-    author: User
+    user_id: int
 
 
-class Blog(BaseModel):
+class Post(BaseModel):
     id: int
     title: str
     date: int
     content: str
-    author: User
+    user_id: int
 
 
 class Comment(BaseModel):
     id: int
     date: int
     content: str
-    author: User
+    user_id: int
 
 
